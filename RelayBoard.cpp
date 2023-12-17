@@ -10,10 +10,12 @@ void RelayBoard::begin() {
 }
 
 void RelayBoard::setRelay(uint8_t relay, bool state) {
+    uint8_t bitPosition = 7 - relay; // Reverse the bit order
+
     if(state) {
-        bitClear(_relayStatus, relay);
+        bitClear(_relayStatus, bitPosition); // Turn relay on
     } else {
-        bitSet(_relayStatus, relay);
+        bitSet(_relayStatus, bitPosition); // Turn relay off
     }
     Wire.beginTransmission(_address);
     Wire.write(_relayStatus);
